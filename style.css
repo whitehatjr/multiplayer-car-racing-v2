@@ -1,0 +1,69 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+@font-face {
+  font-family: vollkorn;
+  src: url(./assets/Vollkorn-Bold.ttf);
+}
+
+canvas {
+  display: block;
+}
+
+.gameTitle{
+  font-size: 80px;
+  color: #FFFF;
+  font-family: vollkorn;
+  text-align: center;
+}
+.gameTitleAfterEffect{
+  font-size: 50px;
+  color: #FFFF;
+  font-family: vollkorn;
+  text-align: center;
+}
+.greeting{
+  font-size: 40px;
+  color: red;
+  font-family: vollkorn;
+  text-align: center;
+}
+
+.customInput {
+  width:200px;
+  height:30px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: white;
+  font-size: 20px;
+  outline:none;
+  font-family: vollkorn;
+  text-align: center;
+}
+
+
+.customButton {
+  width:180px;
+  height:50px;
+  background-color: #fea834;
+  border: none;
+  color: #000;
+  font-weight:bold;
+  padding: 15px 32px;
+  border-radius: 15px;
+  margin-bottom:100px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: vollkorn;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  outline: none;
+}
