@@ -40,7 +40,7 @@ class Game {
     player.getCarsAtEnd();
 
     if (allPlayers !== undefined) {
-      bgImg = 139;
+      bgImg = backgroundImage2;
       image(track, 0, -height * 5, width, height * 6);
 
       //index of the array
@@ -65,7 +65,6 @@ class Game {
             60,
             60
           );
-
           // Changing camera position in y direction
           camera.position.y = cars[index - 1].position.y;
         }
@@ -101,6 +100,7 @@ class Game {
       gameState = 2;
       player.rank += 1;
       Player.updateCarsAtEnd(player.rank);
+      player.update();
       this.showLeaderboard();
     }
 

@@ -4,7 +4,7 @@ class Player {
     this.index = null;
     this.distanceX = 0;
     this.distanceY = 0;
-    this.rank = null;
+    this.rank = 0;
   }
 
   addPlayer() {
@@ -19,7 +19,8 @@ class Player {
     database.ref(playerIndex).set({
       name: this.name,
       distanceX: distanceX,
-      distanceY: this.distanceY
+      distanceY: this.distanceY,
+      rank: this.rank
     });
   }
 
@@ -43,7 +44,8 @@ class Player {
     var playerIndex = "players/player" + this.index;
     database.ref(playerIndex).update({
       distanceX: this.distanceX,
-      distanceY: this.distanceY
+      distanceY: this.distanceY,
+      rank: this.rank
     });
   }
 
