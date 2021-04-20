@@ -1,5 +1,6 @@
 var canvas;
-var bgImg, car1_img, car2_img, track, backgroundImage1, backgroundImage2;
+var fuelImage, backgroundImage1, backgroundImage2, lifeImage;
+var bgImg, car1_img, car2_img, track;
 var database, form, player, playerCount;
 var allPlayers, car1, car2;
 var gameState;
@@ -8,6 +9,8 @@ var cars = [];
 function preload() {
   backgroundImage1 = loadImage("./assets/background1.png");
   backgroundImage2 = loadImage("./assets/background2.png");
+  fuelImage = loadImage("./assets/fuel.png");
+  lifeImage = loadImage("./assets/life.png");
   car1_img = loadImage("../assets/car1.png");
   car2_img = loadImage("../assets/car2.png");
   track = loadImage("../assets/track.png");

@@ -5,6 +5,8 @@ class Player {
     this.distanceX = 0;
     this.distanceY = 0;
     this.rank = 0;
+    this.fuel = 185;
+    this.life = 185;
   }
 
   addPlayer() {

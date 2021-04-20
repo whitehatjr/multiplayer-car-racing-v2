@@ -1,6 +1,7 @@
 class Game {
   constructor() {
     this.leadeboardTitle = createElement("h2");
+
     this.leader1 = createElement("h2");
     this.leader2 = createElement("h2");
 
@@ -68,10 +69,16 @@ class Game {
     player.getCarsAtEnd();
 
     if (allPlayers !== undefined) {
-      this.showLeaderboard();
-
       bgImg = backgroundImage2;
       image(track, 0, -height * 5, width, height * 6);
+
+      this.showLife();
+      this.showFuel();
+      this.showLeaderboard();
+
+      if (player.fuel > 0) {
+        player.fuel -= 0.3;
+      }
 
       //index of the array
       var index = 0;
@@ -194,6 +201,28 @@ class Game {
 
     this.leader1.html(leader1);
     this.leader2.html(leader2);
+  }
+
+  showLife() {
+    push();
+    image(lifeImage, width / 2 - 130, height - player.distanceY - 400, 20, 20);
+    fill("white");
+    rect(width / 2 - 100, height - player.distanceY - 400, 185, 20);
+    fill("#f50057");
+    rect(width / 2 - 100, height - player.distanceY - 400, player.life, 20);
+    noStroke();
+    pop();
+  }
+
+  showFuel() {
+    push();
+    image(fuelImage, width / 2 - 130, height - player.distanceY - 350, 20, 20);
+    fill("white");
+    rect(width / 2 - 100, height - player.distanceY - 350, 185, 20);
+    fill("#ffc400");
+    rect(width / 2 - 100, height - player.distanceY - 350, player.fuel, 20);
+    noStroke();
+    pop();
   }
 
   showRank() {
