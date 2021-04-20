@@ -14,10 +14,8 @@ canvas {
 }
 
 .gameTitle{
-  font-size: 80px;
-  color: #FFFF;
-  font-family: vollkorn;
-  text-align: center;
+  width: 85%;
+  height: 160px;
 }
 .gameTitleAfterEffect{
   font-size: 50px;
@@ -27,7 +25,7 @@ canvas {
 }
 .greeting{
   font-size: 40px;
-  color: red;
+  color: white;
   font-family: vollkorn;
   text-align: center;
 }
@@ -35,26 +33,30 @@ canvas {
 .customInput {
   width:200px;
   height:30px;
-  border: 1px solid black;
+  border: 3px solid white;
   border-radius: 5px;
   padding: 5px;
-  background-color: white;
+  background-color:transparent;
   font-size: 20px;
   outline:none;
+  color:white;
   font-family: vollkorn;
   text-align: center;
 }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 0.5; /* Firefox */
+}
 
 .customButton {
   width:180px;
   height:50px;
   background-color: #fea834;
-  border: none;
-  color: #000;
+  border: 3px solid white;
+  color: #FFFF;
   font-weight:bold;
-  padding: 15px 32px;
-  border-radius: 15px;
+  border-radius: 10px;
   margin-bottom:100px;
   text-align: center;
   text-decoration: none;
