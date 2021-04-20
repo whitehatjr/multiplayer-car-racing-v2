@@ -29,7 +29,21 @@ class Game {
     car2.addImage("car2", car2_img);
     car2.scale = 0.07;
 
+    fuels = new Group();
+
     cars = [car1, car2];
+
+    for (var i = 0; i < 4; i++) {
+      var newFuel = createSprite(
+        random(width / 2 + 200, width / 2 - 200),
+        random(-height * 4, height - 400),
+        10,
+        10
+      );
+      newFuel.addImage("fuel", fuelImage);
+      newFuel.scale = 0.02;
+      newFuel.addToGroup(newFuel);
+    }
   }
 
   update(state) {

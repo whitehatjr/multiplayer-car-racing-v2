@@ -3,7 +3,7 @@ var fuelImage, backgroundImage1, backgroundImage2, lifeImage;
 var bgImg, car1_img, car2_img, track;
 var database, form, player, playerCount;
 var allPlayers, car1, car2;
-var gameState;
+var gameState, fuels;
 var cars = [];
 
 function preload() {
