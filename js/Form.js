@@ -4,8 +4,6 @@ class Form {
     this.playButton = createButton("Play");
     this.titleImg = createImg("./assets/title.png", "game title");
     this.greeting = createElement("h2");
-
-    // this.reset = createButton("Reset");
   }
 
   setElementsPosition() {
@@ -49,13 +47,5 @@ class Form {
     this.setElementsPosition();
     this.setElementsStyle();
     this.handleMousePressed();
-    // this.reset.position(displayWidth - 100, 20);
-    //
-
-    //
-    // this.reset.mousePressed(() => {
-    //   player.updateCount(0);
-    //   game.update(0);
-    // });
   }
 }

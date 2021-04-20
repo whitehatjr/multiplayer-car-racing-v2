@@ -1,5 +1,9 @@
 class Game {
-  constructor() {}
+  constructor() {
+    this.resetButton = createButton("");
+    this.resetButton.class("resetButton");
+  }
+
   getState() {
     var gameStateRef = database.ref("gameState");
     gameStateRef.on("value", function(data) {
@@ -33,10 +37,13 @@ class Game {
     form.hide();
     form.titleImg.position(40, 50);
     form.titleImg.class("gameTitleAfterEffect");
+    this.resetButton.position(width / 2 + 280, 60);
   }
 
   play() {
     this.handleElements();
+    this.handleResetButton();
+
     Player.getPlayersInfo();
     player.getCarsAtEnd();
 
@@ -106,6 +113,22 @@ class Game {
     }
 
     drawSprites();
+  }
+
+  handleResetButton() {
+    this.resetButton.mousePressed(() => {
+      game.reset();
+      window.location.reload();
+    });
+  }
+
+  reset() {
+    database.ref("/").set({
+      carsAtEnd: 0,
+      playerCount: 0,
+      gameState: 0,
+      palyers: {}
+    });
   }
 
   showLeaderboard() {
