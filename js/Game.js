@@ -50,7 +50,7 @@ class Game {
         index = index + 1;
 
         //use data form the database to display the cars in x and y direction
-        var x = width - allPlayers[plr].distanceX;
+        var x = allPlayers[plr].distanceX;
         var y = height - allPlayers[plr].distanceY;
 
         cars[index - 1].position.x = x;
@@ -77,13 +77,21 @@ class Game {
       player.update();
     }
 
-    if (keyIsDown(LEFT_ARROW) && player.index !== null) {
-      player.distanceX += 5;
+    if (
+      keyIsDown(LEFT_ARROW) &&
+      player.index !== null &&
+      player.distanceX > width / 3 - 50
+    ) {
+      player.distanceX -= 5;
       player.update();
     }
 
-    if (keyIsDown(RIGHT_ARROW) && player.index !== null) {
-      player.distanceX -= 5;
+    if (
+      keyIsDown(RIGHT_ARROW) &&
+      player.index !== null &&
+      player.distanceX < width / 2 + 300
+    ) {
+      player.distanceX += 5;
       player.update();
     }
 
