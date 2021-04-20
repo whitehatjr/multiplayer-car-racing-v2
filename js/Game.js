@@ -25,6 +25,7 @@ class Game {
     car1 = createSprite(width / 2 - 50, height - 100);
     car1.addImage("car1", car1_img);
     car1.scale = 0.07;
+
     car2 = createSprite(width / 2 + 100, height - 100);
     car2.addImage("car2", car2_img);
     car2.scale = 0.07;
@@ -40,9 +41,10 @@ class Game {
         10,
         10
       );
-      newFuel.addImage("fuel", fuelImage);
+      // newFuel.addImage("fuel", fuelImage);
+      newFuel.addAnimation("normal", fuelImage, fuelImage);
       newFuel.scale = 0.02;
-      newFuel.addToGroup(newFuel);
+      fuels.add(newFuel);
     }
   }
 
@@ -83,16 +85,13 @@ class Game {
     player.getCarsAtEnd();
 
     if (allPlayers !== undefined) {
-      bgImg = backgroundImage2;
+      // bgImg = backgroundImage2;
       image(track, 0, -height * 5, width, height * 6);
 
       this.showLife();
       this.showFuel();
       this.showLeaderboard();
-
-      if (player.fuel > 0) {
-        player.fuel -= 0.3;
-      }
+      this.handleFuel();
 
       //index of the array
       var index = 0;
@@ -145,6 +144,7 @@ class Game {
       player.update();
     }
 
+    // Finshing Line
     const finshLine = height * 6 - 100;
 
     if (player.distanceY > finshLine) {
@@ -239,6 +239,28 @@ class Game {
     pop();
   }
 
+  handleFuel() {
+    // Reducing Player car fuel
+    if (player.fuel > 0) {
+      player.fuel -= 0.3;
+    }
+
+    car1.overlap(fuels, this.collectFule);
+
+    car2.overlap(fuels, this.collectFule);
+  }
+
+  collectFule(collector, collected) {
+    player.fuel = 185;
+    //collector is another name for fuel
+    //show the animation
+    collector.changeAnimation("stretch");
+    collector.animation.rewind();
+    //collected is the sprite in the group collectibles that triggered
+    //the event
+    collected.remove();
+  }
+
   showRank() {
     swal({
       title: `Awesome!${"\n"}Rank${"\n"}${player.rank}`,
@@ -251,6 +273,6 @@ class Game {
   }
 
   end() {
-    bgImg = backgroundImage;
+    // bgImg = backgroundImage;
   }
 }
