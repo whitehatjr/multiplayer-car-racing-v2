@@ -1,5 +1,6 @@
 class Game {
   constructor() {
+    this.resetTitle = createElement("h2");
     this.resetButton = createButton("");
     this.resetButton.class("resetButton");
   }
@@ -37,7 +38,10 @@ class Game {
     form.hide();
     form.titleImg.position(40, 50);
     form.titleImg.class("gameTitleAfterEffect");
-    this.resetButton.position(width / 2 + 280, 60);
+    this.resetButton.position(width / 2 + 230, 100);
+    this.resetTitle.html("Reset Game");
+    this.resetTitle.class("resetText");
+    this.resetTitle.position(width / 2 + 200, 40);
   }
 
   play() {
