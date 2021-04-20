@@ -2,8 +2,34 @@ class Player {
   constructor() {
     this.name = null;
     this.index = null;
-    this.distance = 0;
+    this.distanceX = 0;
+    this.distanceY = 0;
     this.rank = null;
+  }
+
+  addPlayer() {
+    var playerIndex = "players/player" + this.index;
+    var distanceX;
+    if (this.index === 1) {
+      distanceX = width / 2 - 100;
+    } else {
+      distanceX = width / 2 + 100;
+    }
+
+    database.ref(playerIndex).set({
+      name: this.name,
+      distanceX: distanceX,
+      distanceY: this.distanceY
+    });
+  }
+
+  getDistance() {
+    var playerDistanceRef = database.ref("players/player" + this.index);
+    playerDistanceRef.on("value", data => {
+      var data = data.val();
+      this.distanceX = data.distanceX;
+      this.distanceY = data.distanceY;
+    });
   }
 
   getCount() {
@@ -16,8 +42,8 @@ class Player {
   update() {
     var playerIndex = "players/player" + this.index;
     database.ref(playerIndex).set({
-      name: this.name,
-      distance: this.distance
+      distanceX: this.distanceX,
+      distanceY: this.distanceY
     });
   }
 

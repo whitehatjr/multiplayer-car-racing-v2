@@ -30,8 +30,8 @@ class Game {
 
   handleElements() {
     form.hide();
-    form.title.position(40, 0);
-    form.title.class("gameTitleAfterEffect");
+    form.titleImg.position(40, 50);
+    form.titleImg.class("gameTitleAfterEffect");
   }
 
   play() {
@@ -41,44 +41,55 @@ class Game {
 
     if (allPlayers !== undefined) {
       bgImg = 139;
-      image(track, 0, -height * 4, width, height * 5);
+      image(track, 0, -height * 5, width, height * 6);
 
       //index of the array
       var index = 0;
-
-      //x and y position of the cars
-      var x = width / 2 - 300;
-      var y = height - 50;
-
       for (var plr in allPlayers) {
         //add 1 to the index for every loop
         index = index + 1;
 
-        //position the cars a little away from each other in x direction
-        x = x + 200;
-        //use data form the database to display the cars in y direction
-        y = height - allPlayers[plr].distance;
+        //use data form the database to display the cars in x and y direction
+        var x = width - allPlayers[plr].distanceX;
+        var y = height - allPlayers[plr].distanceY;
+
         cars[index - 1].position.x = x;
         cars[index - 1].position.y = y;
 
         if (index === player.index) {
           stroke(10);
           fill("red");
-          ellipse(x, y, 60, 60);
-          camera.position.x = cars[index - 1].position.x;
+          ellipse(
+            cars[index - 1].position.x,
+            cars[index - 1].position.y,
+            60,
+            60
+          );
+
+          // Changing camera position in y direction
           camera.position.y = cars[index - 1].position.y;
         }
       }
     }
 
     if (keyIsDown(UP_ARROW) && player.index !== null) {
-      player.distance += 10;
+      player.distanceY += 10;
       player.update();
     }
 
-    const finshLine = height * 5 - 100;
+    if (keyIsDown(LEFT_ARROW) && player.index !== null) {
+      player.distanceX += 5;
+      player.update();
+    }
 
-    if (player.distance > finshLine) {
+    if (keyIsDown(RIGHT_ARROW) && player.index !== null) {
+      player.distanceX -= 5;
+      player.update();
+    }
+
+    const finshLine = height * 6 - 100;
+
+    if (player.distanceY > finshLine) {
       gameState = 2;
       player.rank += 1;
       Player.updateCarsAtEnd(player.rank);

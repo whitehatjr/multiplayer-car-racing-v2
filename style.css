@@ -18,10 +18,8 @@ canvas {
   height: 160px;
 }
 .gameTitleAfterEffect{
-  font-size: 50px;
-  color: #FFFF;
-  font-family: vollkorn;
-  text-align: center;
+  width: 25%;
+  height: 80px;
 }
 .greeting{
   font-size: 40px;
