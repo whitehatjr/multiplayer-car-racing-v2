@@ -118,24 +118,7 @@ class Game {
         if (index === player.index) {
           this.handleFuel(index);
           this.handlePowerCoins(index);
-          // if (index === 1) {
-          //   if (cars[index - 1].collide(cars[1])) {
-          //     console.log("indise");
-          //   }
-          // }
-          //
-          if (index === 2) {
-            // cars[index - 1].collide(cars[0], function(spriteA, spriteB) {
-            //   spriteA.remove();
-            //   if (player.life > 0) {
-            //     player.life -= 46.25;
-            //   }
-            // });
-
-            if (this.isTouching(cars[index - 1], cars[0])) {
-              console.log("index");
-            }
-          }
+          this.handleCarACollisionWithCarB(index);
 
           stroke(10);
           fill("red");
@@ -307,16 +290,29 @@ class Game {
     });
   }
 
-  isTouching(object1, object2) {
-    if (
-      object1.x - object2.x < object2.width / 2 + object1.width / 2 &&
-      object2.x - object1.x < object2.width / 2 + object1.width / 2 &&
-      object1.y - object2.y < object2.height / 2 + object1.height / 2 &&
-      object2.y - object1.y < object2.height / 2 + object1.height / 2
-    ) {
-      return true;
-    } else {
-      return false;
+  handleCarACollisionWithCarB(index) {
+    if (index === 1) {
+      var x1 = cars[index - 1].position.x;
+      var y1 = cars[index - 1].position.y;
+
+      var x2 = cars[1].position.x;
+      var y2 = cars[1].position.y;
+      var d = dist(x1, y1, x2, y2);
+      if (d === 50) {
+        if (player.life > 0) player.life -= 43.25;
+      }
+    }
+
+    if (index === 2) {
+      var x1 = cars[index - 1].position.x;
+      var y1 = cars[index - 1].position.y;
+
+      var x2 = cars[0].position.x;
+      var y2 = cars[0].position.y;
+      var d = dist(x1, y1, x2, y2);
+      if (d === 50) {
+        if (player.life > 0) player.life -= 43.25;
+      }
     }
   }
 
