@@ -266,7 +266,7 @@ class Game {
     if (player.fuel > 0) {
       player.fuel -= 0.3;
     }
-    cars[index - 1].overlap(fuels, this.collectFule);
+    cars[index - 1].overlap(fuels, this.collectFuel);
 
     if (player.fuel <= 0) {
       gameState = 2;
@@ -275,7 +275,7 @@ class Game {
     }
   }
 
-  collectFule(collector, collected) {
+  collectFuel(collector, collected) {
     player.fuel = 185;
     //collector is another name for fuel
     //show the animation
