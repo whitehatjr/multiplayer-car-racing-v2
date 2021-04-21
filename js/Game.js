@@ -7,6 +7,7 @@ class Game {
 
     this.resetTitle = createElement("h2");
     this.resetButton = createButton("");
+    this.playerMoving = false;
   }
 
   getState() {
@@ -59,9 +60,9 @@ class Game {
     form.titleImg.position(40, 50);
     form.titleImg.class("gameTitleAfterEffect");
 
-    this.leadeboardTitle.html("Leaders");
+    this.leadeboardTitle.html("Leaderboard");
     this.leadeboardTitle.class("resetText");
-    this.leadeboardTitle.position(width / 3 - 20, 40);
+    this.leadeboardTitle.position(width / 3 - 60, 40);
 
     this.leader1.class("leadersText");
     this.leader1.position(width / 3 - 50, 80);
@@ -91,7 +92,6 @@ class Game {
       this.showLife();
       this.showFuel();
       this.showLeaderboard();
-      this.handleFuel();
 
       //index of the array
       var index = 0;
@@ -106,6 +106,8 @@ class Game {
         cars[index - 1].position.x = x;
         cars[index - 1].position.y = y;
 
+        this.handleFuel(index);
+
         if (index === player.index) {
           stroke(10);
           fill("red");
@@ -119,9 +121,15 @@ class Game {
           camera.position.y = cars[index - 1].position.y;
         }
       }
+
+      if (this.playerMoving) {
+        player.distanceY += 5;
+        player.update();
+      }
     }
 
     if (keyIsDown(UP_ARROW) && player.index !== null) {
+      this.playerMoving = true;
       player.distanceY += 10;
       player.update();
     }
@@ -239,15 +247,18 @@ class Game {
     pop();
   }
 
-  handleFuel() {
+  handleFuel(index) {
     // Reducing Player car fuel
     if (player.fuel > 0) {
       player.fuel -= 0.3;
     }
+    cars[index - 1].overlap(fuels, this.collectFule);
 
-    car1.overlap(fuels, this.collectFule);
-
-    car2.overlap(fuels, this.collectFule);
+    if (player.fuel <= 0) {
+      gameState = 2;
+      player.update();
+      this.gameOver();
+    }
   }
 
   collectFule(collector, collected) {
@@ -269,6 +280,17 @@ class Game {
         "https://raw.githubusercontent.com/vishalgaddam873/p5-multiplayer-car-race-game/master/assets/cup.png",
       imageSize: "100x100",
       confirmButtonText: "Ok"
+    });
+  }
+
+  gameOver() {
+    swal({
+      title: `Game Over`,
+      text: "Oops you lost the race....!!!",
+      imageUrl:
+        "https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
+      imageSize: "100x100",
+      confirmButtonText: "Thanks For Playing"
     });
   }
 
