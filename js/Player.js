@@ -7,6 +7,7 @@ class Player {
     this.rank = 0;
     this.fuel = 185;
     this.life = 185;
+    this.score = 0;
   }
 
   addPlayer() {
@@ -22,7 +23,8 @@ class Player {
       name: this.name,
       distanceX: distanceX,
       distanceY: this.distanceY,
-      rank: this.rank
+      rank: this.rank,
+      score: this.score
     });
   }
 
@@ -47,7 +49,8 @@ class Player {
     database.ref(playerIndex).update({
       distanceX: this.distanceX,
       distanceY: this.distanceY,
-      rank: this.rank
+      rank: this.rank,
+      score: this.score
     });
   }
 

@@ -30,22 +30,35 @@ class Game {
     car2 = createSprite(width / 2 + 100, height - 100);
     car2.addImage("car2", car2_img);
     car2.scale = 0.07;
+    cars = [car1, car2];
 
     fuels = new Group();
-
-    cars = [car1, car2];
+    powerCoins = new Group();
 
     for (var i = 0; i < 4; i++) {
       var newFuel = createSprite(
         random(width / 2 + 200, width / 2 - 200),
-        random(-height * 4, height - 400),
+        random(-height * 4, height - 200),
         10,
         10
       );
-      // newFuel.addImage("fuel", fuelImage);
+
       newFuel.addAnimation("normal", fuelImage, fuelImage);
       newFuel.scale = 0.02;
       fuels.add(newFuel);
+    }
+
+    for (var i = 0; i < 18; i++) {
+      var power = createSprite(
+        random(width / 2 + 250, width / 2 - 200),
+        random(-height * 4.5, height - 400),
+        10,
+        10
+      );
+
+      power.addAnimation("normal", powerCoinImage, powerCoinImage);
+      power.scale = 0.09;
+      powerCoins.add(power);
     }
   }
 
@@ -107,6 +120,7 @@ class Game {
         cars[index - 1].position.y = y;
 
         this.handleFuel(index);
+        this.handlePowerCoins(index);
 
         if (index === player.index) {
           stroke(10);
@@ -195,14 +209,14 @@ class Game {
         "&emsp;" +
         players[0].name +
         "&emsp;" +
-        players[0].distanceY;
+        players[0].score;
 
       leader2 =
         players[1].rank +
         "&emsp;" +
         players[1].name +
         "&emsp;" +
-        players[1].distanceY;
+        players[1].score;
     }
 
     if (players[1].rank === 1) {
@@ -211,14 +225,14 @@ class Game {
         "&emsp;" +
         players[1].name +
         "&emsp;" +
-        players[1].distanceY;
+        players[1].score;
 
       leader2 =
         players[0].rank +
         "&emsp;" +
         players[0].name +
         "&emsp;" +
-        players[0].distanceY;
+        players[0].score;
     }
 
     this.leader1.html(leader1);
@@ -270,6 +284,20 @@ class Game {
     //collected is the sprite in the group collectibles that triggered
     //the event
     collected.remove();
+  }
+
+  handlePowerCoins(index) {
+    cars[index - 1].overlap(powerCoins, function(collector, collected) {
+      player.score += 7 * 3;
+      player.update();
+      //collector is another name for power coin
+      //show the animation
+      collector.changeAnimation("stretch");
+      collector.animation.rewind();
+      //collected is the sprite in the group collectibles that triggered
+      //the event
+      collected.remove();
+    });
   }
 
   showRank() {
