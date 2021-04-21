@@ -37,10 +37,8 @@ class Game {
 
     for (var i = 0; i < 4; i++) {
       var newFuel = createSprite(
-        random(width / 2 + 200, width / 2 - 200),
-        random(-height * 4, height - 200),
-        10,
-        10
+        random(width / 2 + 150, width / 2 - 150),
+        random(-height * 4.5, height - 400)
       );
 
       newFuel.addAnimation("normal", fuelImage, fuelImage);
@@ -50,10 +48,8 @@ class Game {
 
     for (var i = 0; i < 18; i++) {
       var power = createSprite(
-        random(width / 2 + 250, width / 2 - 200),
-        random(-height * 4.5, height - 400),
-        10,
-        10
+        random(width / 2 + 150, width / 2 - 150),
+        random(-height * 4.5, height - 400)
       );
 
       power.addAnimation("normal", powerCoinImage, powerCoinImage);
@@ -119,10 +115,28 @@ class Game {
         cars[index - 1].position.x = x;
         cars[index - 1].position.y = y;
 
-        this.handleFuel(index);
-        this.handlePowerCoins(index);
-
         if (index === player.index) {
+          this.handleFuel(index);
+          this.handlePowerCoins(index);
+          // if (index === 1) {
+          //   if (cars[index - 1].collide(cars[1])) {
+          //     console.log("indise");
+          //   }
+          // }
+          //
+          if (index === 2) {
+            // cars[index - 1].collide(cars[0], function(spriteA, spriteB) {
+            //   spriteA.remove();
+            //   if (player.life > 0) {
+            //     player.life -= 46.25;
+            //   }
+            // });
+
+            if (this.isTouching(cars[index - 1], cars[0])) {
+              console.log("index");
+            }
+          }
+
           stroke(10);
           fill("red");
           ellipse(
@@ -131,6 +145,7 @@ class Game {
             60,
             60
           );
+
           // Changing camera position in y direction
           camera.position.y = cars[index - 1].position.y;
         }
@@ -263,7 +278,7 @@ class Game {
 
   handleFuel(index) {
     // Reducing Player car fuel
-    if (player.fuel > 0) {
+    if (player.fuel > 0 && this.playerMoving) {
       player.fuel -= 0.3;
     }
     cars[index - 1].overlap(fuels, this.collectFuel);
@@ -277,10 +292,6 @@ class Game {
 
   collectFuel(collector, collected) {
     player.fuel = 185;
-    //collector is another name for fuel
-    //show the animation
-    collector.changeAnimation("stretch");
-    collector.animation.rewind();
     //collected is the sprite in the group collectibles that triggered
     //the event
     collected.remove();
@@ -290,14 +301,23 @@ class Game {
     cars[index - 1].overlap(powerCoins, function(collector, collected) {
       player.score += 7 * 3;
       player.update();
-      //collector is another name for power coin
-      //show the animation
-      collector.changeAnimation("stretch");
-      collector.animation.rewind();
       //collected is the sprite in the group collectibles that triggered
       //the event
       collected.remove();
     });
+  }
+
+  isTouching(object1, object2) {
+    if (
+      object1.x - object2.x < object2.width / 2 + object1.width / 2 &&
+      object2.x - object1.x < object2.width / 2 + object1.width / 2 &&
+      object1.y - object2.y < object2.height / 2 + object1.height / 2 &&
+      object2.y - object1.y < object2.height / 2 + object1.height / 2
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   showRank() {
