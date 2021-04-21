@@ -8,6 +8,7 @@ class Game {
     this.resetTitle = createElement("h2");
     this.resetButton = createButton("");
     this.playerMoving = false;
+    this.blast = false;
   }
 
   getState() {
@@ -25,19 +26,20 @@ class Game {
 
     car1 = createSprite(width / 2 - 50, height - 100);
     car1.addImage("car1", car1_img);
-    car1.addAnimation("blast", blast1Image, blast2Image);
+    car1.addAnimation("blast", blastImage, blastImage);
 
     car1.scale = 0.07;
 
     car2 = createSprite(width / 2 + 100, height - 100);
     car2.addImage("car2", car2_img);
-    car2.addAnimation("blast", blast1Image, blast2Image);
+    car2.addAnimation("blast", blastImage, blastImage);
 
     car2.scale = 0.07;
     cars = [car1, car2];
 
     fuels = new Group();
     powerCoins = new Group();
+    obstacles = new Group();
 
     for (var i = 0; i < 4; i++) {
       var newFuel = createSprite(
@@ -45,7 +47,7 @@ class Game {
         random(-height * 4.5, height - 400)
       );
 
-      newFuel.addAnimation("normal", fuelImage, fuelImage);
+      newFuel.addImage(fuelImage);
 
       newFuel.scale = 0.02;
       fuels.add(newFuel);
@@ -57,9 +59,34 @@ class Game {
         random(-height * 4.5, height - 400)
       );
 
-      power.addAnimation("normal", powerCoinImage, powerCoinImage);
+      power.addImage(powerCoinImage);
       power.scale = 0.09;
       powerCoins.add(power);
+    }
+
+    var obstaclesPositions = [
+      { x: width / 2 + 250, y: height - 800, image: obstacle2Image },
+      { x: width / 2 - 150, y: height - 1300, image: obstacle1Image },
+      { x: width / 2 + 250, y: height - 1800, image: obstacle1Image },
+      { x: width / 2 - 180, y: height - 2300, image: obstacle2Image },
+      { x: width / 2, y: height - 2800, image: obstacle2Image },
+      { x: width / 2 - 180, y: height - 3300, image: obstacle1Image },
+      { x: width / 2 + 180, y: height - 3300, image: obstacle2Image },
+      { x: width / 2 + 250, y: height - 3800, image: obstacle2Image },
+      { x: width / 2 - 150, y: height - 4300, image: obstacle1Image },
+      { x: width / 2 + 250, y: height - 4800, image: obstacle2Image },
+      { x: width / 2, y: height - 5300, image: obstacle1Image },
+      { x: width / 2 - 180, y: height - 5500, image: obstacle2Image }
+    ];
+
+    for (var i = 0; i < obstaclesPositions.length; i++) {
+      var obstacle = createSprite(
+        obstaclesPositions[i].x,
+        obstaclesPositions[i].y
+      );
+      obstacle.addImage(obstaclesPositions[i].image);
+      obstacle.scale = 0.04;
+      obstacles.add(obstacle);
     }
   }
 
@@ -137,14 +164,8 @@ class Game {
           if (player.life <= 0) {
             cars[index - 1].changeAnimation("blast");
             cars[index - 1].scale = 0.3;
+            this.blast = true;
           }
-
-          // if (
-          //   cars[index - 1].getAnimationLabel() == "blast" &&
-          //   cars[index - 1].animation.getFrame() ==
-          //     cars[index - 1].animation.getLastFrame()
-          // ) {
-          // }
 
           // Changing camera position in y direction
           camera.position.y = cars[index - 1].position.y;
@@ -157,7 +178,7 @@ class Game {
       }
     }
 
-    if (keyIsDown(UP_ARROW) && player.index !== null) {
+    if (keyIsDown(UP_ARROW) && player.index !== null && !this.blast) {
       this.playerMoving = true;
       player.distanceY += 10;
       player.update();
@@ -166,7 +187,8 @@ class Game {
     if (
       keyIsDown(LEFT_ARROW) &&
       player.index !== null &&
-      player.distanceX > width / 3 - 50
+      player.distanceX > width / 3 - 50 &&
+      !this.blast
     ) {
       player.distanceX -= 5;
       player.update();
@@ -175,7 +197,8 @@ class Game {
     if (
       keyIsDown(RIGHT_ARROW) &&
       player.index !== null &&
-      player.distanceX < width / 2 + 300
+      player.distanceX < width / 2 + 300 &&
+      !this.blast
     ) {
       player.distanceX += 5;
       player.update();
