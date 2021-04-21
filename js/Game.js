@@ -25,10 +25,14 @@ class Game {
 
     car1 = createSprite(width / 2 - 50, height - 100);
     car1.addImage("car1", car1_img);
+    car1.addAnimation("blast", blast1Image, blast2Image);
+
     car1.scale = 0.07;
 
     car2 = createSprite(width / 2 + 100, height - 100);
     car2.addImage("car2", car2_img);
+    car2.addAnimation("blast", blast1Image, blast2Image);
+
     car2.scale = 0.07;
     cars = [car1, car2];
 
@@ -42,6 +46,7 @@ class Game {
       );
 
       newFuel.addAnimation("normal", fuelImage, fuelImage);
+
       newFuel.scale = 0.02;
       fuels.add(newFuel);
     }
@@ -116,10 +121,6 @@ class Game {
         cars[index - 1].position.y = y;
 
         if (index === player.index) {
-          this.handleFuel(index);
-          this.handlePowerCoins(index);
-          this.handleCarACollisionWithCarB(index);
-
           stroke(10);
           fill("red");
           ellipse(
@@ -128,6 +129,22 @@ class Game {
             60,
             60
           );
+
+          this.handleFuel(index);
+          this.handlePowerCoins(index);
+          this.handleCarACollisionWithCarB(index);
+
+          if (player.life <= 0) {
+            cars[index - 1].changeAnimation("blast");
+            cars[index - 1].scale = 0.3;
+          }
+
+          // if (
+          //   cars[index - 1].getAnimationLabel() == "blast" &&
+          //   cars[index - 1].animation.getFrame() ==
+          //     cars[index - 1].animation.getLastFrame()
+          // ) {
+          // }
 
           // Changing camera position in y direction
           camera.position.y = cars[index - 1].position.y;
@@ -299,7 +316,7 @@ class Game {
       var y2 = cars[1].position.y;
       var d = dist(x1, y1, x2, y2);
       if (d === 50) {
-        if (player.life > 0) player.life -= 43.25;
+        if (player.life > 0) player.life -= 46.25;
       }
     }
 
@@ -311,7 +328,7 @@ class Game {
       var y2 = cars[0].position.y;
       var d = dist(x1, y1, x2, y2);
       if (d === 50) {
-        if (player.life > 0) player.life -= 43.25;
+        if (player.life > 0) player.life -= 46.25;
       }
     }
   }
