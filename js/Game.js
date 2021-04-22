@@ -69,12 +69,12 @@ class Game {
       { x: width / 2 - 180, y: height - 5500, image: obstacle2Image }
     ];
 
-    // Adding obstacle sprite in the game
+    //Adding obstacle sprite in the game
     this.addSpirtes(
       obstacles,
       obstaclesPositions.length,
       obstacle1Image,
-      0.09,
+      0.04,
       obstaclesPositions
     );
   }
@@ -84,16 +84,16 @@ class Game {
       var x, y;
 
       if (positions.length > 0) {
-        x = positions.x;
-        y = positions.y;
-        spirteImage = positions.image;
+        x = positions[i].x;
+        y = positions[i].y;
+        spirteImage = positions[i].image;
       } else {
         x = random(width / 2 + 150, width / 2 - 150);
         y = random(-height * 4.5, height - 400);
       }
-
       var spirte = createSprite(x, y);
-      spirte.addImage(spirteImage);
+      spirte.addImage("spirte", spirteImage);
+
       spirte.scale = scale;
       spriteGroup.add(spirte);
     }
