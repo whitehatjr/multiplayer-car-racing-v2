@@ -9,6 +9,7 @@ class Game {
     this.resetButton = createButton("");
     this.playerMoving = false;
     this.blast = false;
+    this.leftKeyActive = false;
   }
 
   getState() {
@@ -160,11 +161,13 @@ class Game {
           this.handleFuel(index);
           this.handlePowerCoins(index);
           this.handleCarACollisionWithCarB(index);
+          this.handleObstacleCollision(index);
 
           if (player.life <= 0) {
             cars[index - 1].changeAnimation("blast");
             cars[index - 1].scale = 0.3;
             this.blast = true;
+            this.playerMoving = false;
           }
 
           // Changing camera position in y direction
@@ -190,6 +193,8 @@ class Game {
       player.distanceX > width / 3 - 50 &&
       !this.blast
     ) {
+      this.leftKeyActive = true;
+
       player.distanceX -= 5;
       player.update();
     }
@@ -200,6 +205,8 @@ class Game {
       player.distanceX < width / 2 + 300 &&
       !this.blast
     ) {
+      this.leftKeyActive = false;
+
       player.distanceX += 5;
       player.update();
     }
@@ -332,27 +339,39 @@ class Game {
 
   handleCarACollisionWithCarB(index) {
     if (index === 1) {
-      var x1 = cars[index - 1].position.x;
-      var y1 = cars[index - 1].position.y;
-
-      var x2 = cars[1].position.x;
-      var y2 = cars[1].position.y;
-      var d = dist(x1, y1, x2, y2);
-      if (d === 50) {
+      if (cars[index - 1].collide(cars[1])) {
+        if (this.leftKeyActive) {
+          player.distanceX += 100;
+        } else {
+          player.distanceX -= 100;
+        }
+        player.update();
         if (player.life > 0) player.life -= 46.25;
       }
     }
 
     if (index === 2) {
-      var x1 = cars[index - 1].position.x;
-      var y1 = cars[index - 1].position.y;
-
-      var x2 = cars[0].position.x;
-      var y2 = cars[0].position.y;
-      var d = dist(x1, y1, x2, y2);
-      if (d === 50) {
+      if (cars[index - 1].collide(cars[0])) {
+        if (this.leftKeyActive) {
+          player.distanceX += 100;
+        } else {
+          player.distanceX -= 100;
+        }
+        player.update();
         if (player.life > 0) player.life -= 46.25;
       }
+    }
+  }
+
+  handleObstacleCollision(index) {
+    if (cars[index - 1].collide(obstacles)) {
+      if (this.leftKeyActive) {
+        player.distanceX += 100;
+      } else {
+        player.distanceX -= 100;
+      }
+      player.update();
+      if (player.life > 0) player.life -= 46.25;
     }
   }
 
