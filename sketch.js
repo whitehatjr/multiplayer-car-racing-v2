@@ -19,7 +19,7 @@ function preload() {
   obstacle2Image = loadImage("./assets/obstacle2.png");
   car1_img = loadImage("../assets/car1.png");
   car2_img = loadImage("../assets/car2.png");
-  track = loadImage("../assets/track.png");
+  track = loadImage("../assets/track.jpg");
 }
 
 function setup() {
