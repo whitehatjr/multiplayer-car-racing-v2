@@ -24,7 +24,8 @@ class Player {
       distanceX: distanceX,
       distanceY: this.distanceY,
       rank: this.rank,
-      score: this.score
+      score: this.score,
+      life: 185
     });
   }
 

@@ -164,7 +164,6 @@ class Game {
     player.getCarsAtEnd();
 
     if (allPlayers !== undefined) {
-      // bgImg = backgroundImage2;
       image(track, 0, -height * 5, width, height * 6);
 
       this.showLife();
