@@ -180,6 +180,12 @@ class Game {
         var x = allPlayers[plr].positionX;
         var y = height - allPlayers[plr].positionY;
 
+        var life = allPlayers[plr].life;
+        if (life <= 0) {
+          cars[index - 1].changeAnimation("blast");
+          cars[index - 1].scale = 0.3;
+        }
+
         cars[index - 1].position.x = x;
         cars[index - 1].position.y = y;
 
@@ -194,8 +200,6 @@ class Game {
           this.handleObstacleCollision(index);
 
           if (player.life <= 0) {
-            cars[index - 1].changeAnimation("blast");
-            cars[index - 1].scale = 0.3;
             this.blast = true;
             this.playerMoving = false;
           }
@@ -335,8 +339,13 @@ class Game {
         } else {
           player.positionX -= 100;
         }
+
+        //Reducing Player Life
+        if (player.life > 0) {
+          player.life -= 46.25;
+        }
+
         player.update();
-        if (player.life > 0) player.life -= 46.25;
       }
     }
 
@@ -347,8 +356,13 @@ class Game {
         } else {
           player.positionX -= 100;
         }
+
+        //Reducing Player Life
+        if (player.life > 0) {
+          player.life -= 185 / 4;
+        }
+
         player.update();
-        if (player.life > 0) player.life -= 185 / 4;
       }
     }
   }
@@ -360,8 +374,13 @@ class Game {
       } else {
         player.positionX -= 100;
       }
+
+      //Reducing Player Life
+      if (player.life > 0) {
+        player.life -= 185 / 4;
+      }
+
       player.update();
-      if (player.life > 0) player.life -= 185 / 4;
     }
   }
 
