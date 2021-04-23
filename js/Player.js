@@ -2,8 +2,8 @@ class Player {
   constructor() {
     this.name = null;
     this.index = null;
-    this.distanceX = 0;
-    this.distanceY = 0;
+    this.positionX = 0;
+    this.positionY = 0;
     this.rank = 0;
     this.fuel = 185;
     this.life = 185;
@@ -12,17 +12,17 @@ class Player {
 
   addPlayer() {
     var playerIndex = "players/player" + this.index;
-    var distanceX;
+    var positionX;
     if (this.index === 1) {
-      distanceX = width / 2 - 100;
+      positionX = width / 2 - 100;
     } else {
-      distanceX = width / 2 + 100;
+      positionX = width / 2 + 100;
     }
 
     database.ref(playerIndex).set({
       name: this.name,
-      distanceX: distanceX,
-      distanceY: this.distanceY,
+      positionX: positionX,
+      positionY: this.positionY,
       rank: this.rank,
       score: this.score,
       life: 185
@@ -33,8 +33,8 @@ class Player {
     var playerDistanceRef = database.ref("players/player" + this.index);
     playerDistanceRef.on("value", data => {
       var data = data.val();
-      this.distanceX = data.distanceX;
-      this.distanceY = data.distanceY;
+      this.positionX = data.positionX;
+      this.positionY = data.positionY;
     });
   }
 
@@ -48,8 +48,8 @@ class Player {
   update() {
     var playerIndex = "players/player" + this.index;
     database.ref(playerIndex).update({
-      distanceX: this.distanceX,
-      distanceY: this.distanceY,
+      positionX: this.positionX,
+      positionY: this.positionY,
       rank: this.rank,
       score: this.score
     });

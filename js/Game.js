@@ -136,22 +136,22 @@ class Game {
 
   showLife() {
     push();
-    image(lifeImage, width / 2 - 130, height - player.distanceY - 400, 20, 20);
+    image(lifeImage, width / 2 - 130, height - player.positionY - 400, 20, 20);
     fill("white");
-    rect(width / 2 - 100, height - player.distanceY - 400, 185, 20);
+    rect(width / 2 - 100, height - player.positionY - 400, 185, 20);
     fill("#f50057");
-    rect(width / 2 - 100, height - player.distanceY - 400, player.life, 20);
+    rect(width / 2 - 100, height - player.positionY - 400, player.life, 20);
     noStroke();
     pop();
   }
 
   showFuel() {
     push();
-    image(fuelImage, width / 2 - 130, height - player.distanceY - 350, 20, 20);
+    image(fuelImage, width / 2 - 130, height - player.positionY - 350, 20, 20);
     fill("white");
-    rect(width / 2 - 100, height - player.distanceY - 350, 185, 20);
+    rect(width / 2 - 100, height - player.positionY - 350, 185, 20);
     fill("#ffc400");
-    rect(width / 2 - 100, height - player.distanceY - 350, player.fuel, 20);
+    rect(width / 2 - 100, height - player.positionY - 350, player.fuel, 20);
     noStroke();
     pop();
   }
@@ -177,8 +177,8 @@ class Game {
         index = index + 1;
 
         //use data form the database to display the cars in x and y direction
-        var x = allPlayers[plr].distanceX;
-        var y = height - allPlayers[plr].distanceY;
+        var x = allPlayers[plr].positionX;
+        var y = height - allPlayers[plr].positionY;
 
         cars[index - 1].position.x = x;
         cars[index - 1].position.y = y;
@@ -206,7 +206,7 @@ class Game {
       }
 
       if (this.playerMoving) {
-        player.distanceY += 5;
+        player.positionY += 5;
         player.update();
       }
 
@@ -216,7 +216,7 @@ class Game {
       // Finshing Line
       const finshLine = height * 6 - 100;
 
-      if (player.distanceY > finshLine) {
+      if (player.positionY > finshLine) {
         gameState = 2;
         player.rank += 1;
         Player.updateCarsAtEnd(player.rank);
@@ -233,21 +233,21 @@ class Game {
       if (keyIsDown(UP_ARROW)) {
         this.playerMoving = true;
 
-        player.distanceY += 10;
+        player.positionY += 10;
         player.update();
       }
 
-      if (keyIsDown(LEFT_ARROW) && player.distanceX > width / 3 - 50) {
+      if (keyIsDown(LEFT_ARROW) && player.positionX > width / 3 - 50) {
         this.leftKeyActive = true;
 
-        player.distanceX -= 5;
+        player.positionX -= 5;
         player.update();
       }
 
-      if (keyIsDown(RIGHT_ARROW) && player.distanceX < width / 2 + 300) {
+      if (keyIsDown(RIGHT_ARROW) && player.positionX < width / 2 + 300) {
         this.leftKeyActive = false;
 
-        player.distanceX += 5;
+        player.positionX += 5;
         player.update();
       }
     }
@@ -331,9 +331,9 @@ class Game {
     if (index === 1) {
       if (cars[index - 1].collide(cars[1])) {
         if (this.leftKeyActive) {
-          player.distanceX += 100;
+          player.positionX += 100;
         } else {
-          player.distanceX -= 100;
+          player.positionX -= 100;
         }
         player.update();
         if (player.life > 0) player.life -= 46.25;
@@ -343,9 +343,9 @@ class Game {
     if (index === 2) {
       if (cars[index - 1].collide(cars[0])) {
         if (this.leftKeyActive) {
-          player.distanceX += 100;
+          player.positionX += 100;
         } else {
-          player.distanceX -= 100;
+          player.positionX -= 100;
         }
         player.update();
         if (player.life > 0) player.life -= 185 / 4;
@@ -356,9 +356,9 @@ class Game {
   handleObstacleCollision(index) {
     if (cars[index - 1].collide(obstacles)) {
       if (this.leftKeyActive) {
-        player.distanceX += 100;
+        player.positionX += 100;
       } else {
-        player.distanceX -= 100;
+        player.positionX -= 100;
       }
       player.update();
       if (player.life > 0) player.life -= 185 / 4;
